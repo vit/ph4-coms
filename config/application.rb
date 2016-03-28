@@ -25,5 +25,37 @@ module My
 
 #    config.assets.digest = true
 
+    config.autoload_paths << Rails.root.join('lib')
+
+=begin
+    class TestMiddleware
+      def initialize(app)
+        @app = app
+      end
+      def call(env)
+        puts "in TestMiddleware"
+        env['rack.session']['QQQQQ 2']='WWWWW 2'
+#        p env['rack.session']
+        env['rack.session'].keys.each do |k|
+          puts "#{k} : #{env['rack.session'][k]}"
+        end
+#        env["action_dispatch.request.unsigned_session_cookie"].keys.each do |k|
+#          puts "#{k} : #{env['rack.session'][k]}"
+#        end
+        p env['rack.session']['warden.user.user.key']
+#        get_cookie(env).keys.each do |k|
+#          puts "#{k} : #{env['rack.session'][k]}"
+#        end
+        $env = env
+        p $env['rack.session']['warden.user.user.key']
+        byebug
+        @app.call(env)
+      end
+    end
+=end
+#    config.middleware.use TestMiddleware
+#   config.middleware.insert_after ActionDispatch::Session::CookieStore, TestMiddleware
+#   config.middleware.insert_after Rack::ETag, TestMiddleware
+
   end
 end

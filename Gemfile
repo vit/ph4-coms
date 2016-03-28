@@ -71,5 +71,7 @@ gem 'yomu'
 
 group :development do
   gem 'i18n-debug'
+#  gem 'meta_request'
 end
 
+gem 'httparty'

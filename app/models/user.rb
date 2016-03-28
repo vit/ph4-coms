@@ -1,17 +1,25 @@
 class User < ActiveRecord::Base
+
+#    extend Devise::Models
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+#  devise :remote_authenticatable, :registerable, :rememberable
+  devise :remote_authenticatable, :remote_rememberable
+#  devise :database_authenticatable
+#  devise :database_authenticatable, :registerable,
+#  devise :remote_authenticatable, :registerable,
+#         :recoverable, :rememberable, :trackable, :validatable
+#    devise :external_authenticatable, :rememberable #, :trackable#, :validatable
+
+    attr_accessor :salt
 
     validates :fname, presence: true
     validates :lname, presence: true
 
+    def full_name
+        "#{fname} #{mname} #{lname}".strip # <#{email}>"
+    end
 
-  def full_name
-#    fname.to_s + ' ' + mname.to_s + ' ' + lname.to_s + ' ' + "<"+email+">"
-#    "#{fname} #{mname} #{lname} <#{email}>"
 
-    "#{fname} #{mname} #{lname}".strip # <#{email}>"
-  end
 end

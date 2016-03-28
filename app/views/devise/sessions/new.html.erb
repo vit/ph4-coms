@@ -26,7 +26,7 @@
     <%= f.password_field :password, autocomplete: "off", class: "form-control", id: "password_field", placeholder: "Password" %>
   </div>
   
-  <% if devise_mapping.rememberable? -%>
+  <% if devise_mapping.remote_rememberable? -%>
     <div class="checkbox">
       <%= f.label :remember_me do %>
         <%= f.check_box :remember_me, checked: true %> Remember me

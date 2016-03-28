@@ -1,12 +1,23 @@
-
+<%= current_user.inspect %>
+<% session.keys.each do |k| %>
+<div>
+  <%= k %>: <%= session[k] %>
+</div>
+<% end %>
 
 <% if user_signed_in? %>
 <div class="container user-top-panel">
           <p class="nnavbar-text pull-right user-name-above" style="margin-right: 0;">
-            <!--span class="user-name"><%= current_user.full_name %></span-->
+            <!--span class="user-name"><%#= current_user.full_name %></span-->
             <%= link_to(u_path(current_user), {}, {class: 'user-name-above'}) do -%><%= current_user.full_name %><% end -%>
-            | <%= link_to(edit_user_registration_path) do -%>Edit<% end -%>
+            | <%#= link_to(edit_user_registration_path) do -%>Edit<%# end -%>
             | <%= link_to(destroy_user_session_path, :method => :delete) do -%>Logout<% end -%>
+          </p>
+</div>
+<% else %>
+<div class="container user-top-panel">
+          <p class="nnavbar-text pull-right user-name-above" style="margin-right: 0;">
+          <%= link_to(new_user_session_path) do -%>Log In<% end -%>
           </p>
 </div>
 <% end %>

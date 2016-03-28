@@ -1,3 +1,4 @@
+
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
@@ -262,4 +263,33 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
+
+  config.warden do |manager|
+    manager.strategies.add(:remote_authenticatable, Devise::Strategies::RemoteAuthenticatable)
+    manager.strategies.add(:remote_rememberable, Devise::Strategies::RemoteRememberable)
+#    manager.default_strategies(:scope => :user).unshift :remote_authenticatable
+  end
+
+#=begin
+Devise.with_options model: true do |d|
+  # Strategies first
+  d.with_options strategy: true do |s|
+    routes = [nil, :new, :destroy]
+#    s.add_module :remote_authenticatable
+#    s.add_module :remote
+#    s.add_module :remote, controller: :sessions, route: { session: routes }
+    s.add_module :remote_authenticatable, controller: :sessions, route: { session: routes }
+    s.add_module :remote_rememberable, no_input: true
+  end
+
+#  d.with_options strategy: true do |s|
+#    routes = [nil, :new, :destroy]
+#    s.add_module :database_authenticatable, controller: :sessions, route: { session: routes }
+#    s.add_module :rememberable, no_input: true
+#  end
+
 end
+#=end
+
+
+end if true
