@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 #         :recoverable, :rememberable, :trackable, :validatable
 #    devise :external_authenticatable, :rememberable #, :trackable#, :validatable
 
-    attr_accessor :salt
+    attr_accessor :salt, :avatar_url
 
     validates :fname, presence: true
     validates :lname, presence: true

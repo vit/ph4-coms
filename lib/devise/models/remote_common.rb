@@ -37,7 +37,10 @@ module Models
                     ) unless user
 #                    puts user.full_name
                     user.salt = user_data['salt']
+                    user.avatar_url = user_data['avatar_url']
                     user.remember_me = user_data['remember_me']
+#                    puts user.inspect
+#                    puts user.avatar_url
                     user
                 else
                     nil
