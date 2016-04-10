@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sid: MyString
+  revision_id: 
+  file_data: MyString
+  file_type: MyString
+  aasm_state: MyString
+
+two:
+  sid: MyString
+  revision_id: 
+  file_data: MyString
+  file_type: MyString
+  aasm_state: MyString

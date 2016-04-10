@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  abstract: MyText
+  sid: MyString
+  user_id: 
+  context_id: 
+  revision_seq: 1
+  last_created_revision_id: 1
+  last_submitted_revision_id: 1
+  aasm_state: MyString
+
+two:
+  title: MyString
+  abstract: MyText
+  sid: MyString
+  user_id: 
+  context_id: 
+  revision_seq: 1
+  last_created_revision_id: 1
+  last_submitted_revision_id: 1
+  aasm_state: MyString

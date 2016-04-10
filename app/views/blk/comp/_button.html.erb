@@ -1,0 +1,10 @@
+<div style="display:inline-block;" class="button">
+    <% method = b[:method] || :get %>
+    <%= button_to b[:path], method: method, data: b[:data],
+        # strip question mark from url if method is :get
+        form: {:onsubmit => (method==:get ? "window.location = this.action; return false;" : nil)},
+        :class => "btn btn-#{b[:type]}", :disabled => b[:disabled], :title => b[:text] do %>
+        <i class="fa fa-<%= b[:icon] %> fa-lg"></i>
+        <%= b[:text] %>
+    <% end %>
+</div>

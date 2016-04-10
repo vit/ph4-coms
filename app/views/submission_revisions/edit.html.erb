@@ -1,0 +1,13 @@
+<div class="page-header">
+  <%= link_to submission_revisions_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to @submission_revision, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Show
+  <% end %>
+  <h1>Editing submission_revision</h1>
+</div>
+
+<%= render 'form' %>

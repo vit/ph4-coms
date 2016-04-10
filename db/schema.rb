@@ -11,7 +11,63 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227174853) do
+ActiveRecord::Schema.define(version: 20160407223313) do
+
+  create_table "contexts", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "slug"
+    t.string   "type"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "sid"
+  end
+
+  add_index "contexts", ["sid"], name: "index_contexts_on_sid", unique: true
+  add_index "contexts", ["slug"], name: "index_contexts_on_slug", unique: true
+  add_index "contexts", ["user_id"], name: "index_contexts_on_user_id"
+
+  create_table "submission_files", force: :cascade do |t|
+    t.string   "sid"
+    t.integer  "revision_id"
+    t.string   "file_data"
+    t.string   "file_type"
+    t.string   "aasm_state"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "submission_files", ["revision_id", "file_type"], name: "index_submission_files_revision_type", unique: true
+  add_index "submission_files", ["revision_id"], name: "index_submission_files_on_revision_id"
+
+  create_table "submission_revisions", force: :cascade do |t|
+    t.string   "sid"
+    t.integer  "submission_id"
+    t.integer  "revision_n",    default: 0
+    t.string   "aasm_state"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "submission_revisions", ["submission_id"], name: "index_submission_revisions_on_submission_id"
+
+  create_table "submissions", force: :cascade do |t|
+    t.string   "title"
+    t.text     "abstract"
+    t.string   "sid"
+    t.integer  "user_id"
+    t.integer  "context_id"
+    t.integer  "revision_seq",               default: 0
+    t.integer  "last_created_revision_id"
+    t.integer  "last_submitted_revision_id"
+    t.string   "aasm_state"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  add_index "submissions", ["context_id"], name: "index_submissions_on_context_id"
+  add_index "submissions", ["user_id"], name: "index_submissions_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

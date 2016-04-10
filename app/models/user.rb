@@ -1,5 +1,9 @@
 class User < ActiveRecord::Base
 
+  has_many :contexts
+  has_many :submissions
+
+
 #    extend Devise::Models
 
   # Include default devise modules. Others available are:

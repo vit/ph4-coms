@@ -26,15 +26,34 @@ $navbar-default-bg: #312312;
 body {
   padding-top: $navbar-height + 10px;
 }
+*/
 
 .page-header {
-  a.btn {
+//  .button {
+//    float: right;
+//  }
+//  .button + .button {
+//    margin-right: 8px;
+//  }
+
+  fform.button_to, a.btn, .button {
     float: right;
   }
-
-  a.btn + a.btn {
+  fform.button_to, a.btn, .button + fform.button_to, a.btn, .button {
     margin-right: 8px;
   }
+
+  
+//  a.btn {
+//    float: right;
+//  }
+//  form.button_to {
+//    float: right;
+//  }
+
+//  a.btn + a.btn {
+//    margin-right: 8px;
+//  }
 }
 
 input[type="radio"], input[type="checkbox"] {
@@ -44,7 +63,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 
-
+/*
 .navbar {
         background-color: rgba(255,255,255,0.95);
 }

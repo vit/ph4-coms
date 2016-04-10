@@ -1,0 +1,35 @@
+<div class="page-header">
+  <%= link_to new_submission_revision_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Submission revision
+  <% end %>
+  <h1>Listing submission_revisions</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Sid</th>
+            <th>Submission</th>
+            <th>Revision n</th>
+            <th>Aasm state</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @submission_revisions) do |submission_revision| %>
+            <td><%= submission_revision.sid %></td>
+            <td><%= submission_revision.submission %></td>
+            <td><%= submission_revision.revision_n %></td>
+            <td><%= submission_revision.aasm_state %></td>
+            <td><%= link_to 'Show', submission_revision %></td>
+        <td><%= link_to 'Edit', edit_submission_revision_path(submission_revision) %></td>
+        <td><%= link_to 'Destroy', submission_revision, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

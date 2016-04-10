@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
 
+  resources :submission_revisions
+#  scope '/admin' do
+    resources :contexts do
+      resources :submissions, shallow: true
+    end
+    resources :conferences
+    resources :journals
+#  end
+
+
+
   root 'home#index'
 
   devise_for :users

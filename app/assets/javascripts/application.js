@@ -15,3 +15,32 @@
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require_tree .
+
+$(document).ready(function() {
+    $('a[disabled=disabled]').click(function(event){
+        event.preventDefault(); // Prevent link from following its href
+        event.stopPropagation();
+    });
+});
+
+/*
+$(document).ready(function() {
+    $('.dropdown').hover(
+        function() {
+            $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn();
+        }, 
+        function() {
+            $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut();
+        }
+    );
+
+    $('.dropdown-menu').hover(
+        function() {
+            $(this).stop(true, true);
+        },
+        function() {
+            $(this).stop(true, true).delay(200).fadeOut();
+        }
+    );
+});
+*/

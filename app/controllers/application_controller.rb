@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include Pundit
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -7,6 +9,9 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  before_action :set_locale
+
+  add_breadcrumb "Home", :root_path
 
 protected
   def ph_link name
@@ -19,6 +24,16 @@ protected
       my: 'https://ph4-my-vit2.c9users.io/'
     }[name]
   end
+
+	def set_locale
+		#I18n.locale = params[:locale] || I18n.default_locale
+		I18n.locale = extract_locale_from_accept_language_header
+	end
+ 
+	def extract_locale_from_accept_language_header
+		request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+	end
+
 
   def configure_permitted_parameters
     #devise_parameter_sanitizer.permit(:sign_up, keys: [:fname, :lname])

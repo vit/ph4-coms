@@ -52,6 +52,13 @@
   </nav-->
 
   <%= render 'layouts/nav' %>
+
+  <div class="container" style="bborder: solid thin green; mmargin-bottom: 0px; ppadding-bottom: 0px;">
+  <ol class="breadcrumb" style="bborder: solid thin red; margin-bottom: 0px; ppadding-bottom: 0px;">
+    <%= render_breadcrumbs :tag => :li, :separator => "", :builder => My::BreadcrumbsBuilder %>
+  </ol>
+  </div>
+
   <div class="container">
     <% flash.each do |name, msg| %>
       <%= content_tag :div, class: "alert alert-#{ name == :error ? "danger" : "success" } alert-dismissable", role: "alert" do %>

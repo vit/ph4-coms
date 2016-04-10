@@ -1,0 +1,23 @@
+
+
+
+  <%# @file_records.each do |file_record| %>
+    <%#= render file_record %>
+  <%# end %>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<%= t('journal.revision_form.form_title') %>
+	</div>
+	<div class="panel-body">
+		<dl class="dl-horizontal">
+			<dt>Revision</dt>
+			<dd>#<%= @submission_revision.revision_n %></dd>
+			<dt>State</dt>
+			<dd><%= @submission_revision.aasm_state %></dd>
+		</dl>
+    	<%= render @file_records %>
+	</div>
+</div>
+
+

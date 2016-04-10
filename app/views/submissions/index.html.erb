@@ -1,0 +1,77 @@
+<div class="container">
+
+
+<div class="page-header">
+  <%= link_to new_context_submission_path(@context), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    <%= t('context.submissions.add_new') %>
+  <% end %>
+  <h1><%= t('context.submissions.my_list_title') %></h1>
+</div>
+
+<div class="list-group">
+  <% @submissions.each do |submission| %>
+    <%= link_to(submission, class: "list-group-item") do %>
+      <h4 class="list-group-item-heading"><%= submission.title %></h4>
+      <p class="list-group-item-text"><%= submission.abstract %></p>
+      <p class="list-group-item-text">
+        <b>Id: </b><%= submission.id %><br/>
+        <b>State: </b><%= submission.aasm_state %><br/>
+      </p>
+    <% end %>
+  <% end %>
+</div>
+
+
+
+
+
+<!--div class="page-header">
+  <%= link_to new_context_submission_path(@context), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Submission
+  <% end %>
+  <h1>Listing submissions</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Title</th>
+            <th>Abstract</th>
+            <th>Sid</th>
+            <th>User</th>
+            <th>Context</th>
+            <th>Revision seq</th>
+            <th>Last created revision</th>
+            <th>Last submitted revision</th>
+            <th>Aasm state</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @submissions) do |submission| %>
+            <td><%= submission.title %></td>
+            <td><%= submission.abstract %></td>
+            <td><%= submission.sid %></td>
+            <td><%= submission.user %></td>
+            <td><%= submission.context %></td>
+            <td><%= submission.revision_seq %></td>
+            <td><%= submission.last_created_revision_id %></td>
+            <td><%= submission.last_submitted_revision_id %></td>
+            <td><%= submission.aasm_state %></td>
+            <td><%= link_to 'Show', submission %></td>
+        <td><%= link_to 'Edit', edit_submission_path(submission) %></td>
+        <td><%= link_to 'Destroy', submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div-->
+
+
+</div>
+
