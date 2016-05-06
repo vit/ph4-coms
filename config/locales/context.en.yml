@@ -12,17 +12,17 @@ en:
       my_profile: My profile
       logout: Logout
       login: Login
-    journals:
-      list_title: Journals list
-      new_journal_btn: New Journal
-    new_journal:
-      page_title: New journal
-    show_journal:
+    contexts:
+      list_title: Contexts list
+      new_context_btn: New Context
+    new_context:
+      page_title: New context
+    show_context:
       edit_btn: Edit
       destroy_btn: Delete
-    edit_journal:
-      page_title: Edit journal
-      show_btn: Show journal
+    edit_context:
+      page_title: Edit data
+      show_btn: Show
     journal:
       title: Title
       description: Description

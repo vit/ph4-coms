@@ -4,14 +4,18 @@ Rails.application.routes.draw do
 #  scope '/admin' do
     resources :contexts do
       resources :submissions, shallow: true
+      resources :ce_submissions, only: [:index, :show, :update], shallow: true
+      resources :r_submissions, only: [:index, :show, :update], shallow: true
     end
     resources :conferences
     resources :journals
+    resources :submission_files
 #  end
 
 
 
-  root 'home#index'
+#  root 'home#index'
+  root 'contexts#index'
 
   devise_for :users
   resources :u, :controller=>"users", only: [:show] do

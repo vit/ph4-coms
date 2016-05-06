@@ -26,18 +26,18 @@
   <div class="panel-body">
     <%
       all_roles = [
-#        {name: 'chief_editor', path: journal_ce_path(journal_id: @journal_journal.id)},
+        {name: 'chief_editor', path: context_ce_submissions_path(@context)},
 #        {name: 'reviewer', path: journal_r_path(journal_id: @journal_journal.id)},
 #        {name: 'author', path: submissions_path(journal_id: @journal_journal.id)}
         {name: 'author', path: context_submissions_path(@context)}
       ]
-      my_roles = ['author'] #| @journal_journal.user_roles(current_user)
+      my_roles = ['author'] #| @context.user_roles(current_user)
     %>
 
     <% all_roles.each do |role| %>
       <%= link_to role[:path], class: 'btn btn-xlg btn-success' do %>
         <i class="fa fa-user fa-2x"></i><br>
-        <%= t('journal.role_name.'+role[:name]) %>
+        <%= t('context.role_name.'+role[:name]) %>
       <% end if my_roles.include?(role[:name]) %>
     <% end %>
 
