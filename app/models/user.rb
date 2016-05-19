@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+  require 'httparty'
+
+        REMOTE_URL_BASE = 'https://ph4-my-vit2.c9users.io/'
+        USER_RPC_URL = REMOTE_URL_BASE+'/u/api.json'
 
   has_many :contexts
   has_many :submissions
@@ -24,6 +28,31 @@ class User < ActiveRecord::Base
     def full_name
         "#{fname} #{mname} #{lname}".strip # <#{email}>"
     end
+
+    def self.r_find id
+      rez = User.remote_api_request('get', {user_id: id})
+      #puts rez
+      u = User.find(id) rescue nil
+      if u
+        u.update(rez)
+      else
+        u = self.new rez
+      end
+      u
+    end
+    def get_followed
+      User.remote_api_request 'get_followed', {user_id: self.id}
+    end
+
+            def self.remote_api_request op, data
+                HTTParty.post(USER_RPC_URL,
+                    body: {
+                        op: op,
+                        data: data
+                    }.to_json,
+                    :headers => { 'Content-Type' => 'application/json' }
+                )['result'] rescue nil
+            end
 
 
 end

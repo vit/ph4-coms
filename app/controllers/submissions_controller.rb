@@ -11,7 +11,7 @@ class SubmissionsController < OfficeSubmissionsController
   # GET /submissions
   # GET /submissions.json
   def index
-#    @submissions = Submission.all
+    authorize @context, :can_author?
     @submissions = current_user.submissions.where(context: @context)
   end
 
@@ -20,17 +20,18 @@ class SubmissionsController < OfficeSubmissionsController
   def show
 ##    @context = @submission.context
 ##    add_breadcrumb @context.title, context_path(@context)
+    authorize @submission
   end
 
   # GET /submissions/new
   def new
+    authorize @context, :can_author?
     @submission = Submission.new
-#    @submissions = @context.submissions.new
   end
 
   # GET /submissions/1/edit
   def edit
-#    @context = @submission.context
+    authorize @submission, :update?
     @submission_revision = @submission.last_created_revision
     @file_records = (true and @submission_revision) ? %w[author_file author_expert_file].map do |type|
       @submission_revision.get_or_new_file_by_type type
@@ -40,18 +41,9 @@ class SubmissionsController < OfficeSubmissionsController
   # POST /submissions
   # POST /submissions.json
   def create
-      data = submission_params.merge user: current_user
-      @submission = @context.submissions.new(data)
-
-#      if @submission.save
-#        flash[:notice] = 'Submission was successfully created.'
-#        @submission.sm_init!
-#        respond_with(@journal_submission, location: edit_submission_path(@submission))
-#      else
-#        respond_with(@journal_submission)
-#      end
-
-#    @submission = Submission.new(submission_params)
+    authorize @context, :can_author?
+    data = submission_params.merge user: current_user
+    @submission = @context.submissions.new(data)
 
     respond_to do |format|
       if @submission.save
@@ -72,21 +64,23 @@ class SubmissionsController < OfficeSubmissionsController
     @submission_revision = @submission.last_created_revision
       data = submission_params
       if data
-#        @journal_submission.update_draft(data)
-        @submission.sm_update!(data)
-        @file_records = @submission_revision ? %w[author_file author_expert_file].map do |type|
-          @submission_revision.get_or_new_file_by_type type
-        end : []
-        #puts @file_records.inspect
+        if policy(@submission).update?
+          @submission.sm_update!(data)
+          @file_records = @submission_revision ? %w[author_file author_expert_file].map do |type|
+            @submission_revision.get_or_new_file_by_type type
+          end : []
+        end
       end
 
       case params[:op]
       when 'submit'
-#        @journal_submission.submit_paper
-        @submission.sm_submit! # '1234567'
+        if policy(@submission).submit?
+          @submission.sm_submit!
+        end
       when 'revise'
-#        @journal_submission.unsubmit_paper
-        @submission.sm_revise!
+        if policy(@submission).revise?
+          @submission.sm_revise!
+        end
       end
 
     respond_to do |format|
@@ -103,7 +97,10 @@ class SubmissionsController < OfficeSubmissionsController
   # DELETE /submissions/1
   # DELETE /submissions/1.json
   def destroy
-    @submission.destroy
+#        authorize @submission
+    if policy(@submission).destroy?
+      @submission.destroy
+    end
     respond_to do |format|
       format.html { redirect_to context_submissions_url, notice: 'Submission was successfully destroyed.' }
       format.json { head :no_content }
@@ -137,7 +134,7 @@ class SubmissionsController < OfficeSubmissionsController
 =end
 
     def set_role
-        @user_role = :a
+        @user_role = :author
     end
 
 

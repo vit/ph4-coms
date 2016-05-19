@@ -6,7 +6,8 @@
   </div>
   <div class="panel-body">
 
-<%= form_for(@submission, url: context_submissions_path(@context), :html => { :class => "form-horizontal", :role => "form" }) do |f| %>
+<%#= form_for(@submission, url: context_submissions_path(@context), :html => { :class => "form-horizontal", :role => "form" }) do |f| %>
+<%= form_for(@submission, url: @submission.persisted? ? submission_path(@submission) : context_submissions_path(@context), :html => { :class => "form-horizontal", :role => "form" }) do |f| %>
 
   <%#= render partial: 'common/forms/form_error_alert', locals: {form_model: @journal_submission} %>
 

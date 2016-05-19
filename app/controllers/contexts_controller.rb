@@ -20,6 +20,7 @@ class ContextsController < ApplicationController
 
   # GET /contexts/1/edit
   def edit
+#        authorize @context, :can_admin?
   end
 
   # POST /contexts

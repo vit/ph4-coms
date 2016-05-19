@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  decision: MyString
+  comment: MyText
+  revision_id: 
+  user_id: 
+  aasm_state: MyString
+
+two:
+  decision: MyString
+  comment: MyText
+  revision_id: 
+  user_id: 
+  aasm_state: MyString

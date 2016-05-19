@@ -3,8 +3,9 @@ class SubmissionRevision < ActiveRecord::Base
 
     belongs_to :submission
     has_many :submission_files, foreign_key: "revision_id"
-    has_one :revision_decision
-    has_many :reviews
+    has_one :revision_decision, class_name: 'SubmissionRevisionDecision', foreign_key: "revision_id"
+#    has_many :reviews
+    has_many :reviews, class_name: 'SubmissionRevisionReview', foreign_key: "revision_id"
 
 	aasm do
 		state :draft, initial: true

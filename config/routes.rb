@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       resources :submissions, shallow: true
       resources :ce_submissions, only: [:index, :show, :update], shallow: true
       resources :r_submissions, only: [:index, :show, :update], shallow: true
+      resources :adm, only: [:index] #, shallow: true
+      resources :context_appointments, only: [:index, :create, :destroy], shallow: true
     end
     resources :conferences
     resources :journals

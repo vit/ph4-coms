@@ -13,6 +13,9 @@ class ApplicationController < ActionController::Base
 
   add_breadcrumb "Home", :root_path
 
+# Taken from Pundit page
+#  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
 protected
   def ph_link name
     name = name.to_sym
@@ -41,6 +44,15 @@ protected
     #devise_parameter_sanitizer.for(:sign_in)        << :username
     devise_parameter_sanitizer.for(:account_update)        << :fname << :mname << :lname
   end
+
+
+# Taken from Pundit page
+# def user_not_authorized(exception)
+#   policy_name = exception.policy.class.to_s.underscore
+#   flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
+#   redirect_to(request.referrer || root_path)
+# end
+
 
 end
 

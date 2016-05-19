@@ -1,0 +1,70 @@
+<div class="panel panel-default" id="adm_ce_list">
+    <div class="panel-heading">Chief Editors List</div>
+  <div class="panel-body">
+
+    <% my_followed = current_user.get_followed %>
+    <%#= my_followed %>
+    <% candidates = my_followed.map { |r| [ r['full_name'], r['id'].to_i ] }.unshift([current_user.full_name, current_user.id]) %>
+
+<%
+    ca = ContextAppointment.new
+    ca.role_name = :chief_editor
+%>
+<%= form_for(ca, url: context_context_appointments_path(@context), :remote => true, :html => { :class => "form-inline", :role => "form" }) do |f| %>
+
+  <%#= render partial: 'common/forms/form_error_alert', locals: {form_model: @journal_submission} %>
+
+      <%= f.hidden_field :role_name, :cclass => "form-control" %>
+  <div class="form-group">
+    <%#= f.label t('context.create_appointment.title'), :class => "col-sm-2 control-label" %>
+    <div cclass="col-sm-10">
+      <%= f.select :user, candidates, :class => "form-control" %>
+      <%#= f.select :user, lst, :class => "form-control" %>
+      <%#= f.select :user, [['qqq', 1], ['www', 2]], :class => "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%#= f.label t('context.submission_form.abstract'), :class => "col-sm-2 control-label" %>
+    <div cclass="col-sm-10">
+      <%#= f.text_area :abstract, :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div cclass="col-sm-offset-2 col-sm-10">
+      <%= f.button :class => "btn btn-success btn-xs" do %>
+        <i class="fa fa-plus ffa-lg"></i>
+        <%= t('context.adm.ce_list.add' ) %>
+      <% end %>
+    </div>
+  </div>
+
+<% end %>
+
+
+
+  </div>
+  <div class="panel-body">
+      <%#= @appointments %>
+        <ul class="list-group">
+            <% @appointments.each do |a| %>
+            <%#= "!!!!!! "+a.inspect %>
+            <li class="list-group-item">
+
+              <%= link_to context_appointment_path(a), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-xs pull-right', remote: true,
+                  :ddisabled => false && !a.may_sm_destroy? do %>
+                &times;
+              <% end %>
+
+              <p>
+                <%= link_to u_path(a.user), target: "_blank" do %>
+                  <i class="fa fa-user"></i> <%= a.user.full_name -%>
+                <% end %>
+                | <%= a.role_name %>
+              </p>
+            </li>
+            <% end %>
+        </ul>
+  </div>
+</div>
+

@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160407223313) do
+ActiveRecord::Schema.define(version: 20160519121059) do
+
+  create_table "context_appointments", force: :cascade do |t|
+    t.integer  "context_id"
+    t.integer  "user_id"
+    t.string   "role_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "context_appointments", ["context_id", "user_id", "role_name"], name: "index_context_appointments_context_user_role", unique: true
+  add_index "context_appointments", ["context_id"], name: "index_context_appointments_on_context_id"
+  add_index "context_appointments", ["user_id"], name: "index_context_appointments_on_user_id"
 
   create_table "contexts", force: :cascade do |t|
     t.string   "title"
@@ -40,6 +52,33 @@ ActiveRecord::Schema.define(version: 20160407223313) do
 
   add_index "submission_files", ["revision_id", "file_type"], name: "index_submission_files_revision_type", unique: true
   add_index "submission_files", ["revision_id"], name: "index_submission_files_on_revision_id"
+
+  create_table "submission_revision_decisions", force: :cascade do |t|
+    t.string   "decision"
+    t.text     "comment"
+    t.integer  "revision_id"
+    t.integer  "user_id"
+    t.string   "aasm_state"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "submission_revision_decisions", ["revision_id"], name: "index_submission_revision_decisions_on_revision_id"
+  add_index "submission_revision_decisions", ["user_id"], name: "index_submission_revision_decisions_on_user_id"
+
+  create_table "submission_revision_reviews", force: :cascade do |t|
+    t.string   "decision"
+    t.text     "comment"
+    t.integer  "revision_id"
+    t.integer  "user_id"
+    t.string   "aasm_state"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "submission_revision_reviews", ["revision_id", "user_id"], name: "index_submission_revision_reviews_revision_user", unique: true
+  add_index "submission_revision_reviews", ["revision_id"], name: "index_submission_revision_reviews_on_revision_id"
+  add_index "submission_revision_reviews", ["user_id"], name: "index_submission_revision_reviews_on_user_id"
 
   create_table "submission_revisions", force: :cascade do |t|
     t.string   "sid"

@@ -1,0 +1,48 @@
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <%= t('journal.office_submission.r_invite.block_title') %>
+      </div>
+      <div class="panel-body">
+
+        <%#= @my_invite.inspect if @my_invite %>
+        <% if @my_invite && !@my_invite.inactive? %>
+          <dl class="dl-horizontal">
+            <dt>State:</dt>
+            <dd><%= @my_invite.aasm_state %></dd>
+          </dl>
+
+          <% if @my_invite.pending? %>
+            <p><%= t('journal.office_submission.r_invite.inv_txt') %></p>
+            <%= link_to journal_r_submission_path(@submission, op: :accept_my_reviewer_invite), method: :put, data: { confirm: 'Are you sure your want to accept this invite?' }, :class => 'btn btn-success', :remote => true, disabled: !(@my_invite && @my_invite.may_sm_accept?) do %>
+              <i class="fa fa-check fa-lg"></i>
+              <%= t('journal.office_submission.r_invite.accept_btn') %>
+            <% end %>
+            <%= link_to journal_r_submission_path(@submission, op: :decline_my_reviewer_invite), method: :put, data: { confirm: 'Are you sure your want to decline this invite?' }, :class => 'btn btn-danger', :remote => true, disabled: !(@my_invite && @my_invite.may_sm_decline?) do %>
+              <%= t('journal.office_submission.r_invite.decline_btn') %>
+            <% end %>
+          <% elsif @my_invite.accepted? %>
+            <p>
+              <%= t('journal.office_submission.r_invite.accepted_txt') %>
+            </p>
+          <% elsif @my_invite.declined? %>
+            <p>
+              <%= t('journal.office_submission.r_invite.declined_txt') %>
+            </p>
+          <% elsif @my_invite.cancelled? %>
+            <p>
+              <%= t('journal.office_submission.r_invite.cancelled_txt') %>
+            </p>
+          <% else %>
+            <p>
+              <%= t('journal.office_submission.r_invite.wrong_state_txt') %>
+            </p>
+          <% end %>
+
+        <% else %>
+          <p>
+            <%= t('journal.office_submission.r_invite.not_invited_txt') %>
+          </p>
+        <% end %>
+
+      </div>
+    </div>

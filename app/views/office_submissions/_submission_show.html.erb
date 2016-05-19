@@ -1,0 +1,148 @@
+<div class="page-header">
+  <%= link_to journal_r_path(journal_id: @journal.id), :class => 'btn btn-default' do %>
+    <i class="fa fa-level-up fa-lg"></i>
+    <%= t('context.r.list_title') %>
+  <% end if @section_journal_reviewer_office %>
+  <%= link_to context_ce_submissions_path(@context), :class => 'btn btn-default' do %>
+    <i class="fa fa-level-up fa-lg"></i>
+    <%= t('context.ce.list_title') %>
+  <% end if @section_journal_chief_editor_office %>
+  <h1><%= t('context.office_submission.page_title') %></h1>
+</div>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <dl class="dl-horizontal">
+      <dt>Id:</dt>
+      <dd><%= @submission.id %></dd>
+      <dt>State:</dt>
+      <dd><%= @submission.aasm_state %></dd>
+    </dl>
+  </div>
+  <div class="panel-body">
+
+    <dl class="dl-horizontal">
+      <dt><%= t('context.office_submission.title') %>:</dt>
+      <dd><%= @submission.title %></dd>
+      <dt><%= t('context.office_submission.abstract') %>:</dt>
+      <dd><%= @submission.abstract %></dd>
+      <dt><%= t('context.office_submission.user') %>:</dt>
+      <dd>
+        <%= link_to u(@submission.user), target: '_blank' do %>
+          <i class="fa fa-user"></i> <%= @submission.user.full_name %>
+        <% end %>
+      </dd>
+    </dl>
+
+    <%= render 'submission_r_invite_block' if @section_journal_reviewer_office %>
+    <%= render 'submission_r_review_block' if @section_journal_reviewer_office && @my_invite && @my_invite.accepted? %>
+
+    <%= render 'submission_ce_decision_block' if @section_journal_chief_editor_office %>
+    <%#= render 'submission_invites_block' if @section_journal_chief_editor_office %>
+
+  </div>
+
+  <div class="panel-heading">
+    <%= t('context.office_submission.revisions.block_title') %>
+  </div>
+
+    <ul class="list-group">
+    <!-- div class="list-group" -->
+      <!-- % @submission.revisions.order(:revision_n).reverse_order.each do |revision| % -->
+      <% @submission.revisions.order(:revision_n).reverse_order.select{|r| !r.draft? }.each do |revision| %>
+        <li class="list-group-item">
+        <!-- div class="list-group-item" -->
+          <dl class="dl-horizontal">
+            <dt><%= t('context.office_submission.revisions.revision') %>:</dt>
+            <dd>#<%= revision.revision_n %></dd>
+            <dt><%= t('context.office_submission.revisions.files') %>:</dt>
+            <dd>
+              <% revision.submission_files.each do |file| %>
+                <%= link_to file.file_data.url do %>
+                  <i class="fa fa-download"></i> <%= file.file_type %>
+                <% end %>
+              <% end %>
+            </dd>
+            <dt>State:</dt>
+            <dd><%= revision.aasm_state %></dd>
+            <% if revision.revision_decision %>
+              <dt><%= t('context.office_submission.revisions.ce_comment') %>:</dt>
+              <dd><%= revision.revision_decision.comment %></dd>
+            <% end %>
+          </dl>
+
+          <% if @section_journal_chief_editor_office %>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <%= t('context.office_submission.revisions.reviews') %>
+              </div>
+                <!-- ul class="list-group" -->
+                <div class="list-group">
+                  <% revision.reviews.each do |r| %>
+                    <!-- li><%= r.inspect %></li -->
+                    <!--div><%= r.inspect %></div -->
+                    <div class="list-group-item">
+                      <dl class="dl-horizontal">
+                        <dt><%= t('context.office_submission.revisions.reviewer') %>:</dt>
+                        <dd>
+                          <%= link_to profile_path(r.user), target: '_blank' do %>
+                            <i class="fa fa-user"></i> <%= r.user.full_name %>
+                          <% end %>
+                        </dd>
+                        <dt><%= t('context.office_submission.revisions.decision') %>:</dt>
+                        <dd><%= r.decision %></dd>
+                        <dt><%= t('context.office_submission.revisions.comment') %>:</dt>
+                        <dd><%= r.comment %></dd>
+                        <dt>State:</dt>
+                        <dd><%= r.aasm_state %></dd>
+                      </dl>
+                    </div>
+                  <% end %>
+                </div>
+                <!-- /ul -->
+            </div>
+          <% end %>
+
+
+          <% if @section_journal_reviewer_office %>
+            <% if r=revision.user_review(current_user) %>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <%= t('context.office_submission.revisions.my_review') %>
+                </div>
+                <div class="panel-body">
+                  <dl class="dl-horizontal">
+                    <dt><%= t('context.office_submission.revisions.reviewer') %>:</dt>
+                    <dd>
+                      <%= link_to profile_path(r.user), target: '_blank' do %>
+                        <i class="fa fa-user"></i> <%= r.user.full_name %>
+                      <% end %>
+                    </dd>
+                    <dt><%= t('context.office_submission.revisions.decision') %>:</dt>
+                    <dd><%= r.decision %></dd>
+                    <dt><%= t('context.office_submission.revisions.comment') %>:</dt>
+                    <dd><%= r.comment %></dd>
+                    <dt>State:</dt>
+                    <dd><%= r.aasm_state %></dd>
+                  </dl>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+
+        <!-- /div -->
+        </li>
+      <% end %>
+    <!-- /div -->
+    </ul>
+  <!-- /div --->
+
+</div>
+
+<%#= render 'edit_reviewer_invites_dialog' if @section_journal_chief_editor_office %>
+<%= render 'edit_decision_dialog' if @section_journal_chief_editor_office %>
+
+<%= render 'edit_review_dialog' if @section_journal_reviewer_office %>
+
+

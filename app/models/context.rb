@@ -2,10 +2,20 @@ class Context < ActiveRecord::Base
     Types = %w[Conference Journal]
     belongs_to :user
     has_many :submissions
-#    has_many :appointments #, class_name: 'Journal::Appointment'
+    has_many :appointments, class_name: 'ContextAppointment'
 
     validates :title, :description, :slug, presence: true
     validates :slug, uniqueness: true
+
+	def user_roles user
+		user ? self.appointments.where(user: user).map(&:role_name).map(&:to_sym) + (self.user==user ? [:admin] : []) + [:author] : []
+#		user ? self.appointments.where(user: user).map(&:role_name) + (self.user==user ? [:admin] : []) : []
+#		user ? self.appointments.where(user: user).map(&:role_name) + (self.user==user ? [] : []) : []
+	end
+
+	def owner? user
+		self.user==user
+	end
 
 =begin
 	def owned_or_managed_by? user

@@ -15,11 +15,9 @@ class OfficeSubmissionsController < OfficeBaseController
 #  respond_to :html, :js
 
 	def show
-#		@submission = Journal::Submission.find(params[:id])
-#		@journal = @submission.journal
 		@revision = @submission.last_submitted_revision
 		@decision = @revision.revision_decision || @revision.build_revision_decision({user: current_user})
-		@my_invite = @submission.user_invite current_user
+#		@my_invite = @submission.user_invite current_user
 		@my_review = @revision.user_review(current_user) || @revision.reviews.build(user: current_user)
 
 	end

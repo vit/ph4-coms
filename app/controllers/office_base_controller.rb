@@ -6,6 +6,10 @@ class OfficeBaseController < ApplicationController
     before_action :set_context
 
     before_action :authenticate_user!
+
+#	before_action :check_role
+	around_action :catch_unauthorized
+
     before_action :set_breadcrumbs
 #    after_action :set_breadcrumbs
 
@@ -17,29 +21,54 @@ private
     end
 
     def set_breadcrumbs
-#        puts "!!!!! "+@user_role+" !!!!!"
+        add_breadcrumb @context.title, context_path(@context)
 		list = [
-#          {name: :a, text: 'My Papers', path: context_submissions_path(@context), active: true, role: :a},
-          {name: :a, text: 'My Papers', path: context_submissions_path(@context), role: :a},
-          {name: :ce, text: 'Chief Editor', path: context_ce_submissions_path(@context), role: :ce},
-#          {name: :e, text: 'Editor', path: '/editor', role: :e},
-#          {name: :r, text: 'Reviewer', path: '/reviewer', role: :r},
-          {name: :r, text: 'Reviewer', path: context_r_submissions_path(@context), role: :r},
+#          {nname: :a, text: 'My Papers', path: context_submissions_path(@context), role: :author},
+#          {nname: :ce, text: 'Chief Editor', path: context_ce_submissions_path(@context), role: :chief_editor},
+#          {nname: :r, text: 'Reviewer', path: context_r_submissions_path(@context), role: :reviewer},
+#          {nname: :adm, text: 'Admin', path: context_adm_index_path(@context), role: :admin},
+          {name: :author, text: 'My Papers', path: context_submissions_path(@context), role: :author, enabled: policy(@context).can_author?},
+          {name: :chief_editor, text: 'Chief Editor', path: context_ce_submissions_path(@context), role: :chief_editor, enabled: policy(@context).can_chief_editor?},
+          {name: :reviewer, text: 'Reviewer', path: context_r_submissions_path(@context), role: :reviewer, enabled: policy(@context).can_reviewer?},
+          {name: :admin, text: 'Admin', path: context_adm_index_path(@context), role: :admin, enabled: policy(@context).can_admin?},
         ]
+        list.select! {|r| r[:enabled]}
         current = list[0]
-        list.each do |e|
-			if e[:role]==@user_role
-				e[:active] = true
-		        current = e
-			end
-        end
+        if current
+            list.each do |e|
+	    		if e[:role]==@user_role
+		    		e[:active] = true
+		            current = e
+    			end
+            end
 
-      add_breadcrumb @context.title, context_path(@context)
-#      add_breadcrumb "My Papers", context_submissions_path(@context), dropdown: {
-      add_breadcrumb current[:text], current[:path], dropdown: {
-      	list: list
-      }
-      add_breadcrumb @submission.title, submission_path(@submission) if @submission
+            add_breadcrumb current[:text], current[:path], dropdown: {
+                list: list
+            }
+            add_breadcrumb @submission.title, submission_path(@submission) if @submission
+        end
     end
+
+    def catch_unauthorized
+        begin
+            yield
+        rescue Pundit::NotAuthorizedError
+            render :no_rights
+        end
+    end
+
+=begin
+    def check_role
+        roles = @context.user_roles(current_user)
+        #puts "!!!!!!! ROLES"
+        #p roles
+        #p @user_role
+        unless roles.include? @user_role
+            # head is equivalent to a rendering
+#            head(403)
+            render :no_rights
+        end
+    end
+=end
 
 end

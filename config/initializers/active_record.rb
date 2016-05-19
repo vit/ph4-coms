@@ -14,7 +14,9 @@ class ActiveRecord::Base
 
 	private
 	def set_sid
-		self.sid = SecureRandom.base58
+#		self.sid = SecureRandom.base58
+#		self.sid = SecureRandom.base58 if defined? self.sid=
+		self.sid = SecureRandom.base58 if self.respond_to? :sid=
 	end
 
 
