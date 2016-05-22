@@ -7,7 +7,7 @@ class Submission < ActiveRecord::Base
   validates :title, :abstract, presence: true
 
   has_many :revisions, class_name: 'SubmissionRevision', dependent: :destroy
-#  has_many :reviewer_invites
+  has_many :reviewer_invitations, class_name: 'SubmissionReviewerInvitation', dependent: :destroy
 
   belongs_to :last_created_revision, class_name: 'SubmissionRevision'
   belongs_to :last_submitted_revision, class_name: 'SubmissionRevision'
@@ -75,25 +75,26 @@ class Submission < ActiveRecord::Base
       transitions :from => :nonexistent, :to => :nonexistent
     end
 
-=begin
-
     event :sm_apply_decision do
       after do
-        JournalMailer.author_submission_apply_decision(self).deliver_now
+# ToDo !!!!!
+#        JournalMailer.author_submission_apply_decision(self).deliver_now
       end
       transitions :from => :under_review, :to => :rejected, :if => (-> {last_submitted_revision.rejected?})
       transitions :from => :under_review, :to => :accepted, :if => (-> {last_submitted_revision.accepted?})
       transitions :from => :under_review, :to => :need_revise, :if => (-> {last_submitted_revision.need_revise?})
     end
 
+=begin
+
 =end
 
 
   end
 
-#  def user_invite user
-#    reviewer_invites.find_by(user: user)
-#  end
+  def user_invitation user
+    reviewer_invitations.find_by(user: user)
+  end
 
   def owner?(user)
     self.user==user

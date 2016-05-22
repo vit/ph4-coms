@@ -1,5 +1,5 @@
-<div class="panel panel-default" id="adm_ce_list">
-    <div class="panel-heading">Chief Editors List</div>
+<div class="panel panel-default" id="adm_<%= role_name %>_list">
+    <div class="panel-heading"><%= role_name %>s List</div>
   <div class="panel-body">
 
     <% my_followed = current_user.get_followed %>
@@ -8,7 +8,8 @@
 
 <%
     ca = ContextAppointment.new
-    ca.role_name = :chief_editor
+    ca.role_name = role_name
+#    ca.role_name = :chief_editor
 %>
 <%= form_for(ca, url: context_context_appointments_path(@context), :remote => true, :html => { :class => "form-inline", :role => "form" }) do |f| %>
 
@@ -47,7 +48,8 @@
   <div class="panel-body">
       <%#= @appointments %>
         <ul class="list-group">
-            <% @appointments.each do |a| %>
+            <% @appointments.select {|a| a.role_name.to_sym==role_name}.each do |a| %>
+            <%# @appointments.each do |a| %>
             <%#= "!!!!!! "+a.inspect %>
             <li class="list-group-item">
 

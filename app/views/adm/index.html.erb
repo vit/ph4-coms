@@ -19,8 +19,13 @@
   <h1><%#= @context.title %><%= t('contexts.admin.admin_page') %></h1>
 </div>
 
-
-  <%= render partial: 'adm/ce_list', locals: {} %>
+<%
+#    ca = ContextAppointment.new
+#    ca.role_name = :chief_editor
+%>
+  <%= render partial: 'adm/role_members_list', locals: {role_name: :chief_editor} %>
+  <%= render partial: 'adm/role_members_list', locals: {role_name: :reviewer} %>
+  <%#= render partial: 'adm/role_members_list', locals: {} %>
 
 
 

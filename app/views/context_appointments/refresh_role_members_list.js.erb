@@ -1,0 +1,5 @@
+
+<%# role_name = :chief_editor %>
+<% role_name = @appointment_role_name %>
+
+$("#adm_<%= role_name %>_list").replaceWith('<%= escape_javascript render(partial: "adm/role_members_list", locals: {role_name: role_name.to_sym}) %>');

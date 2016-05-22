@@ -10,7 +10,7 @@
         </h4>
       </div>
       <div class="modal-body">
-        <%= form_for @decision, url: ce_submission_path(@submission), method: :put, remote: true, :html => { :class => "form-horizontal", :role => "form", :onsubmit => "$('body').removeClass('modal-open'); return true;"} do |f| %>
+        <%= form_for @decision, url: ce_submission_path(@submission), method: :put, remote: true, :html => { :class => "form-horizontal", :role => "form", :onsubmit => "$('#decisionModal').modal('hide'); /*$('body').removeClass('modal-open');*/ return true;"} do |f| %>
           <div class="form-group">
             <%= f.label t('context.office_submission.ce_decision.decision'), :class => "col-sm-2 control-label" %>
             <div class="col-sm-10">

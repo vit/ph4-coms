@@ -80,7 +80,7 @@ ru:
         reviewer: Рецензент
         decision: Решение
         comment: Комментарии
-      r_invite:
+      r_invitation:
         block_title: Приглашение к рецензированию
         inv_txt: Чтобы рецензировать, Вам нужно выразить согласие, нажав "Принять". Нажмите "Отклонить", если Вы не хотите рецензировать эту статью.
         accept_btn: Принять
@@ -108,7 +108,7 @@ ru:
         submit_btn: Подать рецензию
         save_btn: Сохранить
         cancel_btn: Не сохранять
-      ce_invites:
+      ce_invitations:
         block_title: Приглашения рецензентов
         create_btn: Создать приглашения
         add_btn: Добавить

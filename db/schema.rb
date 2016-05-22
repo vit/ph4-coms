@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519121059) do
+ActiveRecord::Schema.define(version: 20160521185236) do
 
   create_table "context_appointments", force: :cascade do |t|
     t.integer  "context_id"
@@ -52,6 +52,18 @@ ActiveRecord::Schema.define(version: 20160519121059) do
 
   add_index "submission_files", ["revision_id", "file_type"], name: "index_submission_files_revision_type", unique: true
   add_index "submission_files", ["revision_id"], name: "index_submission_files_on_revision_id"
+
+  create_table "submission_reviewer_invitations", force: :cascade do |t|
+    t.integer  "submission_id"
+    t.integer  "user_id"
+    t.string   "aasm_state"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "submission_reviewer_invitations", ["submission_id", "user_id"], name: "index_submission_reviewer_invitations_submission_user", unique: true
+  add_index "submission_reviewer_invitations", ["submission_id"], name: "index_submission_reviewer_invitations_on_submission_id"
+  add_index "submission_reviewer_invitations", ["user_id"], name: "index_submission_reviewer_invitations_on_user_id"
 
   create_table "submission_revision_decisions", force: :cascade do |t|
     t.string   "decision"

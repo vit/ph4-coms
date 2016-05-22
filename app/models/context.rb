@@ -30,15 +30,15 @@ class Context < ActiveRecord::Base
 	def chief_editors
 		self.appointments.where(role_name: 'chief_editor').map(&:user)
 	end
+=end
 	def reviewers
 		self.appointments.where(role_name: 'reviewer').map(&:user)
 	end
-	def user_reviewer_invites user
-		self.submissions.joins(:reviewer_invites).where(journal_reviewer_invites: {user_id: user.id}).where.not(journal_reviewer_invites: {aasm_state: 'inactive'})
-#		self.submissions.joins(:reviewer_invites).where(journal_reviewer_invites: {user_id: user.id})
-#		self.submissions.joins(:reviewer_invites).where(journal_reviewer_invites: {user_id: user.id}).map(&:submission)
-#		self.appointments.where(role_name: 'reviewer', user: user).map(&:journal)
+#=begin
+	def user_reviewer_invitations user
+#		self.submissions.joins(:submission_reviewer_invitations).where(submission_reviewer_invitations: {user_id: user.id}).where.not(submission_reviewer_invitations: {aasm_state: 'inactive'})
+		self.submissions.joins(:reviewer_invitations).where(submission_reviewer_invitations: {user_id: user.id}).where.not(submission_reviewer_invitations: {aasm_state: 'inactive'})
 	end
-=end
+#=end
 
 end

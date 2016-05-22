@@ -1,5 +1,5 @@
 <div class="page-header">
-  <%= link_to journal_r_path(journal_id: @journal.id), :class => 'btn btn-default' do %>
+  <%= link_to context_r_submissions_path(@context), :class => 'btn btn-default' do %>
     <i class="fa fa-level-up fa-lg"></i>
     <%= t('context.r.list_title') %>
   <% end if @section_journal_reviewer_office %>
@@ -29,17 +29,17 @@
       <dd><%= @submission.abstract %></dd>
       <dt><%= t('context.office_submission.user') %>:</dt>
       <dd>
-        <%= link_to u(@submission.user), target: '_blank' do %>
+        <%= link_to u_path(@submission.user), target: '_blank' do %>
           <i class="fa fa-user"></i> <%= @submission.user.full_name %>
         <% end %>
       </dd>
     </dl>
 
-    <%= render 'submission_r_invite_block' if @section_journal_reviewer_office %>
-    <%= render 'submission_r_review_block' if @section_journal_reviewer_office && @my_invite && @my_invite.accepted? %>
+    <%= render 'submission_r_invitation_block' if @section_journal_reviewer_office %>
+    <%= render 'submission_r_review_block' if @section_journal_reviewer_office && @my_invitation && @my_invitation.accepted? %>
 
     <%= render 'submission_ce_decision_block' if @section_journal_chief_editor_office %>
-    <%#= render 'submission_invites_block' if @section_journal_chief_editor_office %>
+    <%= render 'submission_invitations_block' if @section_journal_chief_editor_office %>
 
   </div>
 
@@ -86,7 +86,7 @@
                       <dl class="dl-horizontal">
                         <dt><%= t('context.office_submission.revisions.reviewer') %>:</dt>
                         <dd>
-                          <%= link_to profile_path(r.user), target: '_blank' do %>
+                          <%= link_to u_path(r.user), target: '_blank' do %>
                             <i class="fa fa-user"></i> <%= r.user.full_name %>
                           <% end %>
                         </dd>
@@ -115,7 +115,7 @@
                   <dl class="dl-horizontal">
                     <dt><%= t('context.office_submission.revisions.reviewer') %>:</dt>
                     <dd>
-                      <%= link_to profile_path(r.user), target: '_blank' do %>
+                      <%= link_to u_path(r.user), target: '_blank' do %>
                         <i class="fa fa-user"></i> <%= r.user.full_name %>
                       <% end %>
                     </dd>
@@ -140,7 +140,7 @@
 
 </div>
 
-<%#= render 'edit_reviewer_invites_dialog' if @section_journal_chief_editor_office %>
+<%= render 'edit_reviewer_invitations_dialog' if @section_journal_chief_editor_office %>
 <%= render 'edit_decision_dialog' if @section_journal_chief_editor_office %>
 
 <%= render 'edit_review_dialog' if @section_journal_reviewer_office %>

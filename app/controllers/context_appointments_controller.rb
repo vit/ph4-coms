@@ -13,9 +13,10 @@ class ContextAppointmentsController < OfficeBaseController
 #        @appointment.save rescue @appointment.destroy
         @appointment.save if @appointment
         @appointments = @context.appointments.map{|r| r}
+        @appointment_role_name = @appointment.role_name rescue nil
         respond_to do |format|
 #            format.js { render partial: 'refresh_ce_list.js.erb' }
-            format.js { render 'refresh_ce_list.js.erb' }
+            format.js { render 'refresh_role_members_list.js.erb' }
         end
 
 #        respond_to do |format|
@@ -30,10 +31,11 @@ class ContextAppointmentsController < OfficeBaseController
         authorize @context, :can_admin?
 #        @appointment = @context.appointments.find(params['id'])
         #puts @appointment
+        @appointment_role_name = @appointment.role_name
         @appointment.destroy
         @appointments = @context.appointments.map{|r| r}
         respond_to do |format|
-            format.js { render 'refresh_ce_list.js.erb' }
+            format.js { render 'refresh_role_members_list.js.erb' }
         end
     end
 

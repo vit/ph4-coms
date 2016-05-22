@@ -45,7 +45,9 @@ private
             add_breadcrumb current[:text], current[:path], dropdown: {
                 list: list
             }
-            add_breadcrumb @submission.title, submission_path(@submission) if @submission
+            add_breadcrumb @submission.title, submission_path(@submission) if @submission and @user_role==:author
+            add_breadcrumb @submission.title, ce_submission_path(@submission) if @submission and @user_role==:chief_editor
+            add_breadcrumb @submission.title, r_submission_path(@submission) if @submission and @user_role==:reviewer
         end
     end
 

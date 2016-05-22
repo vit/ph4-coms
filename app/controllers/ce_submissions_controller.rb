@@ -16,9 +16,9 @@ class CeSubmissionsController < OfficeSubmissionsController
 
 private
 
-    def set_journal_only
-      #@journal = Journal::Journal.find(params[:journal_id])
-    end
+#    def set_journal_only
+#      #@journal = Journal::Journal.find(params[:journal_id])
+#    end
 
     def set_role
         @user_role = :chief_editor

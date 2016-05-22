@@ -1,0 +1,47 @@
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <%= t('context.office_submission.r_invitation.block_title') %>
+      </div>
+      <div class="panel-body">
+
+        <% if @my_invitation && !@my_invitation.inactive? %>
+          <dl class="dl-horizontal">
+            <dt>State:</dt>
+            <dd><%= @my_invitation.aasm_state %></dd>
+          </dl>
+
+          <% if @my_invitation.pending? %>
+            <p><%= t('context.office_submission.r_invitation.inv_txt') %></p>
+            <%= link_to r_submission_path(@submission, op: :accept_my_reviewer_invitation), method: :put, data: { confirm: 'Are you sure your want to accept this invitation?' }, :class => 'btn btn-success', :remote => true, disabled: !(@my_invitation && @my_invitation.may_sm_accept?) do %>
+              <i class="fa fa-check fa-lg"></i>
+              <%= t('context.office_submission.r_invitation.accept_btn') %>
+            <% end %>
+            <%= link_to r_submission_path(@submission, op: :decline_my_reviewer_invitation), method: :put, data: { confirm: 'Are you sure your want to decline this invitation?' }, :class => 'btn btn-danger', :remote => true, disabled: !(@my_invitation && @my_invitation.may_sm_decline?) do %>
+              <%= t('context.office_submission.r_invitation.decline_btn') %>
+            <% end %>
+          <% elsif @my_invitation.accepted? %>
+            <p>
+              <%= t('context.office_submission.r_invitation.accepted_txt') %>
+            </p>
+          <% elsif @my_invitation.declined? %>
+            <p>
+              <%= t('context.office_submission.r_invitation.declined_txt') %>
+            </p>
+          <% elsif @my_invitation.cancelled? %>
+            <p>
+              <%= t('context.office_submission.r_invitation.cancelled_txt') %>
+            </p>
+          <% else %>
+            <p>
+              <%= t('context.office_submission.r_invitation.wrong_state_txt') %>
+            </p>
+          <% end %>
+
+        <% else %>
+          <p>
+            <%= t('context.office_submission.r_invitation.not_invitationd_txt') %>
+          </p>
+        <% end %>
+
+      </div>
+    </div>
