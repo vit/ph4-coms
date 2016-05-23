@@ -4,7 +4,8 @@ module Devise
 module Models
     module RemoteCommon
         extend ActiveSupport::Concern
-        REMOTE_AUTH_URL = 'https://ph4-my-vit2.c9users.io/u/remote_auth.json'
+#        REMOTE_AUTH_URL = 'https://ph4-my-vit2.c9users.io/u/remote_auth.json'
+        REMOTE_AUTH_URL = Rails.configuration.x.sites.my + '/u/remote_auth.json'
 
 #        attr_accessor :remember_me, :extend_remember_period
 

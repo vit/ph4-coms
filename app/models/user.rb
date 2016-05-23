@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
   require 'httparty'
 
-        REMOTE_URL_BASE = 'https://ph4-my-vit2.c9users.io/'
-        USER_RPC_URL = REMOTE_URL_BASE+'/u/api.json'
+#        REMOTE_URL_BASE = 'https://ph4-my-vit2.c9users.io/'
+        REMOTE_URL_BASE = Rails.configuration.x.sites.my
+        USER_RPC_URL = REMOTE_URL_BASE + '/u/api.json'
 
   has_many :contexts
   has_many :submissions
