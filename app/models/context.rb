@@ -27,10 +27,10 @@ class Context < ActiveRecord::Base
 		user ? self.appointments.where(user: user).map(&:role_name) : []
 	end
 
+=end
 	def chief_editors
 		self.appointments.where(role_name: 'chief_editor').map(&:user)
 	end
-=end
 	def reviewers
 		self.appointments.where(role_name: 'reviewer').map(&:user)
 	end

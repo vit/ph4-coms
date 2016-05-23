@@ -38,6 +38,7 @@ class Submission < ActiveRecord::Base
         self.update data
         self.save
 #        JournalMailer.author_submission_update(self).deliver_now
+        ContextMailer.author_submission_update(self).deliver_now
       end
       transitions :from => :draft, :to => :draft
       transitions :from => :revised_draft, :to => :revised_draft
@@ -50,6 +51,8 @@ class Submission < ActiveRecord::Base
         save!
 #        JournalMailer.author_submission_submit(self).deliver_now
 #        JournalMailer.ce_submission_submit(self).deliver_now
+        ContextMailer.author_submission_submit(self).deliver_now
+        ContextMailer.ce_submission_submit(self).deliver_now
       end
       transitions :from => :draft, :to => :under_review
       transitions :from => :revised_draft, :to => :under_review
@@ -77,8 +80,8 @@ class Submission < ActiveRecord::Base
 
     event :sm_apply_decision do
       after do
-# ToDo !!!!!
 #        JournalMailer.author_submission_apply_decision(self).deliver_now
+        ContextMailer.author_submission_apply_decision(self).deliver_now
       end
       transitions :from => :under_review, :to => :rejected, :if => (-> {last_submitted_revision.rejected?})
       transitions :from => :under_review, :to => :accepted, :if => (-> {last_submitted_revision.accepted?})
