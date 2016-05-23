@@ -6,7 +6,7 @@
         
         <!-- Title -->
         <div class="navbar-header pull-left">
-          <a class="navbar-brand" href="http://coms.physcon.ru/">CoMS</a>
+          <a class="navbar-brand" href="<%= Rails.configuration.x.sites.coms %>">CoMS</a>
         </div>
 
         <!-- 'Sticky' (non-collapsing) right-side menu item(s) -->
@@ -60,9 +60,12 @@
       <i class="fa fa-bars"></i></span>
     </a>
     <ul class="dropdown-menu">
-      <li><a href="http://physcon.ru/">IPACS Home</a></li>
+      <!--li><a href="http://physcon.ru/">IPACS Home</a></li>
       <li><a href="http://lib.physcon.ru">Library</a></li>
-      <li><a href="http://my.physcon.ru">My IPACS</a></li>
+      <li><a href="http://my.physcon.ru">My IPACS</a></li-->
+      <li><a href="<%= Rails.configuration.x.sites.home %>">IPACS Home</a></li>
+      <li><a href="<%= Rails.configuration.x.sites.lib %>">Library</a></li>
+      <li><a href="<%= Rails.configuration.x.sites.my %>">My IPACS</a></li>
     </ul>
 </li>
 
