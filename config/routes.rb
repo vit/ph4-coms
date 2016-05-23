@@ -20,11 +20,12 @@ Rails.application.routes.draw do
   root 'contexts#index'
 
   devise_for :users
-  resources :u, :controller=>"users", only: [:show] do
-    collection do
-      get 'user_widget'
-    end
-  end
+    get "/u/:id" => redirect(Rails.configuration.x.sites.my + "/u/%{id}"), as: 'u'
+#  resources :u, :controller=>"users", only: [:show] do
+#    collection do
+#      get 'user_widget'
+#    end
+#  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

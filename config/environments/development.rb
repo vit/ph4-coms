@@ -52,6 +52,6 @@ config.action_mailer.raise_delivery_errors = true
 config.action_mailer.default_options = {from: 'no-reply@physcon.ru'}
 
 
-  config.x.sites.my = 'https://ph4-my-vit2.c9users.io/'
+  config.x.sites.my = 'https://ph4-my-vit2.c9users.io'
 
 end
