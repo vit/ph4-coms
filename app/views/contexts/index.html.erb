@@ -1,7 +1,7 @@
 <div class="container">
   
 
-<div class="page-header">
+<div class="page-header clear">
   <%= link_to new_context_path, class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-plus"></span>
     <%= t('context.contexts.new_context_btn') %>
@@ -9,7 +9,42 @@
   <h1><%= t('context.contexts.list_title') %></h1>
 </div>
 
-<div class="table-responsive">
+
+<div class="panel panel-default">
+  <div class="panel-heading">Journals</div>
+<ul class="list-group">
+      <%= content_tag_for(:li, @journals, class: 'list-group-item') do |context| %>
+        <!--h4 class="list-group-item-heading"><%#= link_to context.title, context %></h4-->
+        <h4 class="list-group-item-heading"><%= link_to context.title, context_path(context) %></h4>
+        <p class="list-group-item-text"><%= context.description %></p>
+        <% if current_user==context.user %>
+          <p class="list-group-item-text">
+            <%= link_to 'Edit', edit_context_path(context) %> | <%= link_to 'Destroy', context, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </p>
+        <% end %>
+      <% end %>
+</ul>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">Conferences</div>
+<ul class="list-group">
+      <%= content_tag_for(:li, @conferences, class: 'list-group-item') do |context| %>
+        <!--h4 class="list-group-item-heading"><%#= link_to context.title, context %></h4-->
+        <h4 class="list-group-item-heading"><%= link_to context.title, context_path(context) %></h4>
+        <p class="list-group-item-text"><%= context.description %></p>
+        <% if current_user==context.user %>
+          <p class="list-group-item-text">
+            <%= link_to 'Edit', edit_context_path(context) %> | <%= link_to 'Destroy', context, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </p>
+        <% end %>
+      <% end %>
+</ul>
+</div>
+
+
+
+<!--div class="table-responsive">
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
@@ -32,14 +67,12 @@
             <td><%= context.type %></td>
             <td><%= context.user ? context.user.full_name : '' %></td>
             <td><%= link_to 'Show', context %></td>
-            <!--td><%#= link_to 'Show', context_path(context) %></td-->
         <td><%= link_to 'Edit', edit_context_path(context) %></td>
         <td><%= link_to 'Destroy', context, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <!--td><%#= link_to 'Destroy', context_path(context), method: :delete, data: { confirm: 'Are you sure?' } %></td-->
       <% end %>
     </tbody>
   </table>
-</div>
+</div-->
 
 
 </div>

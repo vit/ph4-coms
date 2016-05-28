@@ -6,6 +6,8 @@ class ContextsController < ApplicationController
   # GET /contexts.json
   def index
     @contexts = Context.all
+    @conferences = Conference.all
+    @journals = Journal.all
   end
 
   # GET /contexts/1
